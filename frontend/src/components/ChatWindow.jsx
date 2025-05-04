@@ -23,18 +23,15 @@ const ChatWindow = () => {
         content: text,
       };
 
-      // Emit the message to the server to broadcast it to all clients
       socket.emit("send_message", message);
-
-      // Don't add the message here to avoid duplication
-      setText(""); // Clear the input after sending
+      setText(""); // Clear input field after sending
     }
   };
 
   return (
-    <div className="flex flex-col flex-1 h-full bg-white">
+    <div className="flex flex-col flex-1 h-full bg-gray-50">
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((msg, idx) => {
           const isSender = msg.sender === "Me";
           return (
@@ -43,7 +40,7 @@ const ChatWindow = () => {
               className={`flex ${isSender ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-xs px-4 py-2 rounded-lg text-sm ${
+                className={`max-w-xs px-4 py-2 rounded-lg text-sm shadow-md ${
                   isSender
                     ? "bg-green-500 text-white rounded-br-none"
                     : "bg-gray-200 text-black rounded-bl-none"
@@ -57,17 +54,17 @@ const ChatWindow = () => {
       </div>
 
       {/* Input Section */}
-      <div className="border-t p-4 flex items-center gap-2">
+      <div className="border-t p-4 flex items-center gap-2 bg-white shadow-md">
         <input
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="flex-1 border rounded px-4 py-2 focus:outline-none focus:ring"
+          className="flex-1 border rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           placeholder="Type a message"
         />
         <button
           onClick={sendMessage}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          className="bg-green-500 text-white px-6 py-2 rounded-xl hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           Send
         </button>
