@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import socket from "../utils/Socket";
 
 const ChatWindow = () => {
@@ -23,19 +22,21 @@ const ChatWindow = () => {
         receiver: "Alice",
         content: text,
       };
+
+      // Emit the message to the server to broadcast it to all clients
       socket.emit("send_message", message);
-      setMessages((prev) => [...prev, message]);
-      setText("");
+
+      // Don't add the message here to avoid duplication
+      setText(""); // Clear the input after sending
     }
   };
 
   return (
     <div className="flex flex-col flex-1 h-full bg-white">
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
+      <div className="flex-1 overflow-y-auto p-4">
         {messages.map((msg, idx) => {
-          const isSender = msg.sender === "Me"; // Replace "Me" with your dynamic username if needed
-
+          const isSender = msg.sender === "Me";
           return (
             <div
               key={idx}
